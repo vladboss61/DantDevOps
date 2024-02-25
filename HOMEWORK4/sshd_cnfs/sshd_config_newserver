@@ -11,8 +11,7 @@
 
 Include /etc/ssh/sshd_config.d/*.conf
 
-Port 2222
-AllowUsers john
+Port 3333
 #AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
@@ -55,7 +54,7 @@ PubkeyAuthentication yes
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-PasswordAuthentication no
+PasswordAuthentication yes
 #PermitEmptyPasswords no
 
 # Change to yes to enable challenge-response passwords (beware issues with
