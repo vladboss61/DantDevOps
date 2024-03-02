@@ -1,0 +1,22 @@
+
+Vagrant.configure("2") do |config|
+  config.vm.define "nginx_vm" do |nginx|
+    nginx.vm.box = "ubuntu/jammy64"
+    nginx.ssh.insert_key = false
+
+    #nginx.vm.network "forwarded_port", guest: 82, host: 50551
+    nginx.vm.network "public_network"
+
+    nginx.vm.provider "virtualbox"
+
+    nginx.vm.provision "shell", inline: <<-SHELL
+      sudo apt update
+      sudo apt install -y nginx
+      sudo sed -i 's/listen 80 default_server/listen 82 default_server/g' /etc/nginx/sites-available/default
+      sudo sed -i 's/listen \\[::\\]:80 default_server/listen [::]:82 default_server/g' /etc/nginx/sites-available/default
+      
+      sudo systemctl reload nginx
+    SHELL
+  end
+
+end
