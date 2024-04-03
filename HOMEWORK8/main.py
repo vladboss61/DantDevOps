@@ -19,6 +19,7 @@ def guess_number(random_number: int, usr_number: int) -> NumberEquality:
 def start() -> None:
     random_number = randint(1, 100)
     attempt = 1
+
     while attempt <= MAX_ATTEMPT:
         print(f'Your attempt: {attempt}')
         guess = int(input('Your number: '))
