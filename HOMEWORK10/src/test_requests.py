@@ -1,5 +1,6 @@
 import pytest
 from flask import Flask, jsonify, request
+from core import first_or_default
 
 # Mock data for testing
 students = [
@@ -19,7 +20,7 @@ def app():
 
     @app.route('/students/<int:student_id>', methods=['GET'])
     def get_student(student_id):
-        student = next((s for s in students if s['id'] == student_id), None)
+        student = first_or_default(students, lambda s: s['id'] == student_id, None)
         if student:
             return jsonify(student)
         else:
@@ -43,7 +44,7 @@ def app():
     @app.route('/students/<int:student_id>', methods=['PUT'])
     def update_student(student_id):
         data = request.json
-        student = next((s for s in students if s['id'] == student_id), None)
+        student = first_or_default(students, lambda s: s['id'] == student_id, None)
         if not student:
             return jsonify({'error': 'Student not found'}), 404
 
