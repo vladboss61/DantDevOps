@@ -18,12 +18,11 @@ def write_students(students):
         writer.writeheader()
         writer.writerows(students)
 
-def find_student_by_id(student_id):
-    students = read_students()
-    for student in students:
+def find_student_by_id(students, student_id):
+    for index, student in enumerate(students):
         if int(student['id']) == student_id:
-            return student
-    return None
+            return index, student
+    return -1, None
 
 def find_students_by_last_name(last_name):
     students = read_students()

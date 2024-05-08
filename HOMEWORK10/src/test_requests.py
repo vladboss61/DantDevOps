@@ -1,78 +1,56 @@
-import pytest
-from flask import Flask, jsonify, request
-from core import first_or_default
+import requests as rq
+import json
 
-# Mock data for testing
-students = [
-    {'id': 1, 'first_name': 'John', 'last_name': 'Doe', 'age': 25},
-    {'id': 2, 'first_name': 'Alice', 'last_name': 'Smith', 'age': 30},
-    {'id': 3, 'first_name': 'Bob', 'last_name': 'Johnson', 'age': 35}
-]
+URL = "http://127.0.0.1:5000/"
+HEADERS = {
+    'Content-Type':'application/json',
+}
 
-@pytest.fixture
-def app():
-    app = Flask(__name__)
+if __name__ == "__main__":
+    print("Request to Students API")
+
+    print("GET - No Students:")
+    print(rq.get(URL + "students").json())
     
-    # Routes for the mock server
-    @app.route('/students', methods=['GET'])
-    def get_students():
-        return jsonify(students)
+    new_student = {
+        'first_name': 'Vlad',
+        'last_name': 'Delas',
+        'age': '26'
+    }
 
-    @app.route('/students/<int:student_id>', methods=['GET'])
-    def get_student(student_id):
-        student = first_or_default(students, lambda s: s['id'] == student_id, None)
-        if student:
-            return jsonify(student)
-        else:
-            return jsonify({'error': 'Student not found'}), 404
+    print("POST Student 1:")
+    rq.post(URL + "students", data=json.dumps(new_student), headers=HEADERS)
 
-    @app.route('/students', methods=['POST'])
-    def create_student():
-        data = request.json
-        if not data or not all(field in data for field in ['first_name', 'last_name', 'age']):
-            return jsonify({'error': 'Invalid request body'}), 400
+    print(rq.get(URL + "students").json())
+    second_new_student = {
+        'first_name': 'Vlad',
+        'last_name': 'Delas',
+        'age': '26'
+    }
 
-        new_student = {
-            'id': max(s['id'] for s in students) + 1,
-            'first_name': data['first_name'],
-            'last_name': data['last_name'],
-            'age': data['age']
-        }
-        students.append(new_student)
-        return jsonify(new_student), 201
+    print("Post Student 2:")
+    rq.post(URL + "students", data=json.dumps(second_new_student), headers=HEADERS)
 
-    @app.route('/students/<int:student_id>', methods=['PUT'])
-    def update_student(student_id):
-        data = request.json
-        student = first_or_default(students, lambda s: s['id'] == student_id, None)
-        if not student:
-            return jsonify({'error': 'Student not found'}), 404
+    print(rq.get(URL + "students").json())
 
-        student.update(data)
-        return jsonify(student)
+    age_patch = {
+        'age': '29'
+    }
+    
+    print("PATCH Student 1:")
+    print(rq.patch(URL + "students/1", data=json.dumps(age_patch), headers=HEADERS).json())
+    print(rq.get(URL + "students").json())
 
-    @app.route('/students/<int:student_id>', methods=['DELETE'])
-    def delete_student(student_id):
-        delete_students = [s for s in students if s['id'] != student_id]
-        return jsonify({'message': 'Student deleted successfully'})
+    print("PUT Student 1:")
+    put_new_student = {
+        'first_name': 'Jon',
+        'last_name': 'Doe',
+        'age': '33'
+    }
+        
+    print(rq.put(URL + "students/1", data=json.dumps(put_new_student), headers=HEADERS).json())
+    print(rq.get(URL + "students").json())
 
-    return app
-
-# Tests
-def test_retrieve_all_students(client):
-    response = client.get('/students')
-    assert response.status_code == 200
-
-def test_create_student(client):
-    data = {'first_name': 'New', 'last_name': 'Student', 'age': 40}
-    response = client.post('/students', json=data)
-    assert response.status_code == 201
-
-def test_update_student(client):
-    data = {'age': 45}
-    response = client.put('/students/1', json=data)
-    assert response.status_code == 200
-
-def test_delete_student(client):
-    response = client.delete('/students/2')
-    assert response.status_code == 200
+    print("Delete Student 1:")
+    print(rq.delete(URL + "students/1", headers=HEADERS).json())
+    print(rq.get(URL + "students").json())
