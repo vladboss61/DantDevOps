@@ -1,0 +1,10 @@
+__pycache__
+env/
+venv/
+run/
+screen_shots/
+
+run.ps1
+studnets.csv
+.dockerignore
+Dockerfile

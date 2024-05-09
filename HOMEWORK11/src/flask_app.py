@@ -1,15 +1,15 @@
 from flask import Flask, request, jsonify
 import core
 
-app = Flask(__name__)
+app_student = Flask(__name__)
 
 # Routes
-@app.route('/students', methods=['GET'])
+@app_student.route('/students', methods=['GET'])
 def get_students():
     students = core.read_students()
     return jsonify(students)
 
-@app.route('/students/<int:student_id>', methods=['GET'])
+@app_student.route('/students/<int:student_id>', methods=['GET'])
 def get_student_by_id(student_id):
     student = core.find_student_by_id(student_id)
     if student:
@@ -17,7 +17,7 @@ def get_student_by_id(student_id):
     else:
         return jsonify({'error': 'Student not found'}), 404
 
-@app.route('/students/last_name/<last_name>', methods=['GET'])
+@app_student.route('/students/last_name/<last_name>', methods=['GET'])
 def get_students_by_last_name(last_name):
     students = core.find_students_by_last_name(last_name)
     if students:
@@ -25,7 +25,7 @@ def get_students_by_last_name(last_name):
     else:
         return jsonify({'error': 'Students with last name not found'}), 404
 
-@app.route('/students', methods=['POST'])
+@app_student.route('/students', methods=['POST'])
 def create_student():
     data = request.json
     
@@ -39,11 +39,11 @@ def create_student():
         'last_name': data['last_name'],
         'age': data['age']
     }
-    students.append(new_student)
+    students.app_studentend(new_student)
     core.write_students(students)
     return jsonify(new_student), 201
 
-@app.route('/students/<int:student_id>', methods=['PUT'])
+@app_student.route('/students/<int:student_id>', methods=['PUT'])
 def update_student(student_id):
     data = request.json
     if not data or not any(field in data for field in ['first_name', 'last_name', 'age']):
@@ -68,7 +68,7 @@ def update_student(student_id):
 
     return jsonify(student)
 
-@app.route('/students/<int:student_id>', methods=['PATCH'])
+@app_student.route('/students/<int:student_id>', methods=['PATCH'])
 def update_student_age(student_id):
     data = request.json
     if not data or 'age' not in data:
@@ -87,7 +87,7 @@ def update_student_age(student_id):
     core.write_students(students)
     return jsonify(student)
 
-@app.route('/students/<int:student_id>', methods=['DELETE'])
+@app_student.route('/students/<int:student_id>', methods=['DELETE'])
 def delete_student(student_id):
     students = core.read_students()
     index, student = core.find_student_by_id(students, student_id)
@@ -100,4 +100,4 @@ def delete_student(student_id):
     return jsonify({'message': 'Student deleted successfully'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app_student.run(debug=True)
