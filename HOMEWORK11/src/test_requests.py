@@ -1,7 +1,7 @@
 import requests as rq
 import json
 
-URL = "http://127.0.0.1:5000/"
+URL = "http://127.0.0.1:8000/"
 HEADERS = {
     'Content-Type':'application/json',
 }
