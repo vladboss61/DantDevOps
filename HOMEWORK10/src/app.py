@@ -37,6 +37,7 @@ def create_student():
         'first_name': data['first_name'],
         'last_name': data['last_name'],
         'age': data['age']
+        
     }
     students.append(new_student)
     core.write_students(students)
