@@ -1,0 +1,38 @@
+Task Network AWS
+
+- Create a VPC (New VPC with CIDR block 10.0.0.0/16)
+
+- Next, we'll create two subnet groups: one public and one private.
+
+- Create two subnet groups: public and private
+
+- Public Subnet: 10.0.1.0/24
+- Private Subnet: 10.0.2.0/24
+- Add Security Groups for SSH (22) port for access.
+
+- Create one EC2 instance in the public subnet and one EC2 instance in the private subnet
+
+- Ensure that the EC2 instance in the public subnet is accessible over the internet, allowing you to connect via SSH
+
+- Ensure that the EC2 instance in the private subnet is not accessible from the internet but is accessible from the EC2 instance in the public subnet
+
+- Ensure that the EC2 instance in the private subnet has access to the internet
+
+- Add Internet Gateway to Access Internet (from and to internet from instance).
+  Add record to a route table with destination 0.0.0.0/0 and target the Internet Gateway.
+- Add NAT gateway to allow access internet (from instance)
+
+* Help 1
+    Ensure the route table associated with your private subnet (10.0.2.0/24) has a default route (0.0.0.0/0) targeting a NAT Gateway or a NAT instance
+    in a public subnet to allow outbound internet traffic from the private subnet.
+
+* Help 2 
+    To allow the private instance to access the internet (e.g., for updates):
+    Create a NAT Gateway or use a NAT instance in the public subnet.
+    Configure the private subnet's route table:
+    Add a route to send all internet-bound traffic (0.0.0.0/0) to the NAT Gateway or NAT instance.
+
+Verification and Testing in the end
+Public Instance: Accessible over SSH from your IP address or any allowed IP range.
+Private Instance: Not accessible directly from the internet. You should be able to SSH into this instance from the public instance using its private IP address.
+
