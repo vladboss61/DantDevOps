@@ -36,3 +36,96 @@ Verification and Testing in the end
 Public Instance: Accessible over SSH from your IP address or any allowed IP range.
 Private Instance: Not accessible directly from the internet. You should be able to SSH into this instance from the public instance using its private IP address.
 
+Solve Step-by-step.
+
+Create a VPC
+Create public and private subnets
+Create an Internet Gateway and attach it to the VPC
+Create a route table for the public subnet and associate it with the Internet Gateway
+Create a route table for the private subnet
+Launch an EC2 instance in the public subnet
+Launch an EC2 instance in the private subnet
+Create a NAT Gateway in the public subnet
+Update the route table for the private subnet to route traffic through the NAT Gateway
+Configure Security Groups and Network Access Control Lists (NACLs)
+Test the configuration
+Step-by-Step Guide:
+
+1. Create a VPC
+Go to the VPC Dashboard in AWS Management Console.
+Click on "Create VPC".
+Enter a name and CIDR block (e.g., 10.0.0.0/16).
+Click "Create".
+
+2. Create Public and Private Subnets
+Still in the VPC Dashboard, go to "Subnets".
+Click "Create Subnet".
+For the public subnet: Name it, select the VPC you just created, and specify a CIDR block (e.g., 10.0.1.0/24).
+For the private subnet: Name it, select the same VPC, and specify a different CIDR block (e.g., 10.0.2.0/24).
+Click "Create" for each subnet.
+
+3. Create an Internet Gateway and Attach It to the VPC
+In the VPC Dashboard, go to "Internet Gateways".
+Click "Create Internet Gateway".
+Name it and click "Create".
+Select the Internet Gateway and click "Attach to VPC".
+Choose the VPC you created and click "Attach".
+
+4. Create a Route Table for the Public Subnet and Associate It with the Internet Gateway
+Go to "Route Tables" in the VPC Dashboard.
+Click "Create Route Table".
+Name it, select the VPC, and click "Create".
+Select the route table and click on the "Routes" tab.
+Click "Edit routes" and add a route:
+Destination: 0.0.0.0/0
+Target: Internet Gateway (select the one you created)
+Click "Save routes".
+Go to the "Subnet Associations" tab, click "Edit subnet associations", and select the public subnet.
+
+5. Create a Route Table for the Private Subnet
+Repeat the process to create another route table for the private subnet.
+Do not associate this route table with an Internet Gateway.
+
+6. Launch an EC2 Instance in the Public Subnet
+Go to the EC2 Dashboard.
+Click "Launch Instance".
+Select an AMI (e.g., Amazon Linux 2).
+Choose an instance type (e.g., t2.micro).
+Configure instance details:
+Network: Select the VPC.
+Subnet: Select the public subnet.
+Auto-assign Public IP: Enable.
+Configure storage and add tags as needed.
+Configure security group:
+Create a new security group allowing SSH (port 22) from your IP.
+Review and launch the instance, ensuring you create or select an existing key pair for SSH access.
+
+7. Launch an EC2 Instance in the Private Subnet
+Repeat the steps to launch another EC2 instance.
+Choose the private subnet this time.
+Ensure "Auto-assign Public IP" is disabled.
+Use a security group that allows inbound SSH traffic only from the public instance's security group.
+
+8. Create a NAT Gateway in the Public Subnet
+Go to the VPC Dashboard, then "NAT Gateways".
+Click "Create NAT Gateway".
+Select the public subnet and allocate an Elastic IP.
+Click "Create NAT Gateway".
+
+9. Update the Route Table for the Private Subnet to Route Traffic Through the NAT Gateway
+Go to "Route Tables" and select the route table associated with the private subnet.
+Click on the "Routes" tab, then "Edit routes".
+Add a route:
+Destination: 0.0.0.0/0
+Target: NAT Gateway (select the one you created)
+Click "Save routes".
+
+10. Configure Security Groups and Network Access Control Lists (NACLs)
+Public Instance Security Group: Allow SSH (port 22) from your IP and HTTP/HTTPS if needed.
+Private Instance Security Group: Allow SSH from the public instance's security group.
+
+11. Test the Configuration
+SSH into the public instance using its public IP.
+From the public instance, SSH into the private instance using its private IP.
+Verify the private instance can access the internet (e.g., curl http://example.com).
+This setup ensures that the public instance is accessible over the internet, and the private instance is only accessible from the public instance while maintaining internet access through the NAT Gateway.
