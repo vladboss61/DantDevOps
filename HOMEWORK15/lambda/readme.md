@@ -1,0 +1,1 @@
+Cron Job for lambda: `cron(0 12 * * ? *)`
