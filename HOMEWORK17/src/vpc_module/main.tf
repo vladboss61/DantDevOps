@@ -26,6 +26,7 @@ resource "aws_instance" "nginx" {
   subnet_id     = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.nginx_sg.id]
 
+  # Install and start NGINX
   user_data = <<-EOF
                 #!/bin/bash
                 yum update -y
