@@ -21,9 +21,9 @@ resource "aws_security_group" "nginx_sg" {
 }
 
 resource "aws_instance" "nginx" {
-  ami           = "ami-078701cc0905d44e4" # Amazon Linux 2 AMI
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.public.id
+  ami                    = "ami-078701cc0905d44e4" # Amazon Linux 2 AMI
+  instance_type          = "t2.micro"
+  subnet_id              = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.nginx_sg.id]
 
   # Install and start NGINX
