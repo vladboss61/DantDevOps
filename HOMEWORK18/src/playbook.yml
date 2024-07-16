@@ -1,7 +1,6 @@
 ---
   - name: Setup Docker and Nginx on EC2 instances
     hosts: ec2_instance
-    become: yes
     tasks:
       - name: Update and upgrade apt packages
         apt:
