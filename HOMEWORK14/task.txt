@@ -20,7 +20,7 @@ Task Network AWS
 
 - Add Internet Gateway to Access Internet (from and to internet from instance).
   Add record to a route table with destination 0.0.0.0/0 and target the Internet Gateway.
-- Add NAT gateway to allow access internet (from instance) changes
+- Add NAT gateway to allow access internet (from instance) changes 
 
 * Help 1
     Ensure the route table associated with your private subnet (10.0.2.0/24) has a default route (0.0.0.0/0) targeting a NAT Gateway or a NAT instance
