@@ -15,7 +15,7 @@ variable "private_subnet_cidr" {
 
 variable "ami_id" {
   type    = string
-  default = "ami-0c55b159cbfafe1f0" # Amazon Linux 2 AMI for us-west-2
+  default = "ami-078701cc0905d44e4" # Amazon Linux 2 AMI for us-west-2
 }
 
 variable "instance_type" {
