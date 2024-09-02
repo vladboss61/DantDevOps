@@ -1,0 +1,15 @@
+To Do
+
+Kubernetes Exercise
+
+Task:
+
+* Create a Pod with Nginx in your local Kubernetes cluster
+* Create a Service for Nginx that will expose port 80 of Nginx to your local network
+* Check that you can see the Nginx default web page on your PC
+
+
+Links:
+https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/
+https://kubernetes.io/docs/concepts/services-networking/service/
+https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/
