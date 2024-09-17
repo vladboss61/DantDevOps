@@ -18,3 +18,11 @@ Create a test pipeline using the Groovy language, which will start when you push
 * Run the Docker image with tests.
 * If the tests are successful, log in to your Docker Hub account using Jenkins credentials from step 7 and push the built image to Docker Hub.
 * If the tests fail, print the message "Tests failed".
+
+
+https://www.jenkins.io/doc/book/installing/
+https://www.jenkins.io/doc/book/pipeline/
+https://wiki.jenkins.io/JENKINS/Building+a+software+project
+
+https://developer.hashicorp.com/vagrant/docs
+https://hub.docker.com/
