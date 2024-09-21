@@ -32,4 +32,8 @@ Develop a script that attempts to read a file and handles errors gracefully. If 
 
 Write script which watching directory "~/watch". If it sees that there appeared a new file, it prints files content and rename it to *.back
 
+<<<<<<< HEAD:HOMEWORK1_2/task.txt
 Write SystemD service for this script and make it running
+=======
+Write SystemD service for this script and make it running
+>>>>>>> d65f4d365c5cf9cae1f0db1ce476b6f214128895:HOMEWORK1/task.txt
